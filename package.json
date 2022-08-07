@@ -1,8 +1,8 @@
 {
-  "name": "com.me.ecs-pathfinding",
-  "version": "1.0.0",
-  "displayName": "ME.ECS Pathfinding",
-  "description": "ME.ECS Pathfinding Package.",
+  "name": "com.me.ecs.essentials.pathfinding",
+  "version": "1.0.1",
+  "displayName": "ME.ECS Essentials Pathfinding",
+  "description": "ME.ECS Essentials Pathfinding Package.",
   "unity": "2020.3",
   "dependencies": {
     "com.unity.collections": "1.0.0-pre.6",
