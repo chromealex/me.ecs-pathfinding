@@ -55,9 +55,6 @@ namespace ME.ECS.Pathfinding.Features {
 
             this.pathfindingInstance = null;
             
-            PathfindingComponentsInitializer.Init(ref this.world.GetStructComponents());
-            ComponentsInitializerWorld.Register(PathfindingComponentsInitializer.InitEntity);
-            
             var entity = new Entity("Pathfinding");
             entity.Set(new IsPathfinding());
             this.pathfindingEntity = entity;
@@ -72,7 +69,6 @@ namespace ME.ECS.Pathfinding.Features {
             
             if (this.pathfindingInstance != null) this.pathfindingInstance.Recycle();
             this.pathfindingInstance = null;
-            ComponentsInitializerWorld.UnRegister(PathfindingComponentsInitializer.InitEntity);
             
         }
 
