@@ -4,6 +4,7 @@
   "displayName": "ME.ECS Essentials Pathfinding",
   "description": "ME.ECS Essentials Pathfinding Package.",
   "unity": "2020.3",
+  "documentationUrl": "https://github.com/chromealex/me.ecs-pathfinding/blob/master/README.md",
   "dependencies": {
     "com.unity.collections": "1.0.0-pre.6",
     "com.unity.ui": "1.0.0-preview.18",
