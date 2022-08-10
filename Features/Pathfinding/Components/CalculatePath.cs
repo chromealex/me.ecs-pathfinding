@@ -1,4 +1,10 @@
-﻿using ME.ECS.Mathematics;
+﻿#if FIXED_POINT_MATH
+using ME.ECS.Mathematics;
+using tfloat = sfloat;
+#else
+using Unity.Mathematics;
+using tfloat = System.Single;
+#endif
 
 namespace ME.ECS.Pathfinding.Features.Pathfinding.Components {
 

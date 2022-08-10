@@ -2,7 +2,13 @@
 #define INLINE_METHODS
 #endif
 
+#if FIXED_POINT_MATH
 using ME.ECS.Mathematics;
+using tfloat = sfloat;
+#else
+using Unity.Mathematics;
+using tfloat = System.Single;
+#endif
 
 using Unity.Jobs;
 using UnityEngine;
@@ -1361,7 +1367,7 @@ namespace ME.ECS.Pathfinding {
         public int area;
         public int tag;
         public int erosion;
-        public sfloat height;
+        public tfloat height;
         public ConnectionsArray connections;
         
         public bool IsSuitable(BurstConstraint constraint, Unity.Collections.NativeArray<GridNodeData> nodes, Vector3Int graphSize, float3 graphCenter) {

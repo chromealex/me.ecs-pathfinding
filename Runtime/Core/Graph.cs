@@ -2,7 +2,13 @@
 #define INLINE_METHODS
 #endif
 
+#if FIXED_POINT_MATH
 using ME.ECS.Mathematics;
+using tfloat = sfloat;
+#else
+using Unity.Mathematics;
+using tfloat = System.Single;
+#endif
 using System.Collections.Generic;
 
 namespace ME.ECS.Pathfinding {
@@ -43,13 +49,13 @@ namespace ME.ECS.Pathfinding {
         public ListCopyable<Node> nodes;
         public List<Pathfinding.ModificatorItem> modifiers = new List<Pathfinding.ModificatorItem>();
 
-        public sfloat minPenalty { get; private set; }
-        public sfloat maxPenalty { get; private set; }
+        public tfloat minPenalty { get; private set; }
+        public tfloat maxPenalty { get; private set; }
 
-        public sfloat minHeight { get; private set; }
-        public sfloat maxHeight { get; private set; }
+        public tfloat minHeight { get; private set; }
+        public tfloat maxHeight { get; private set; }
 
-        public void SetMinMaxHeight(sfloat min, sfloat max) {
+        public void SetMinMaxHeight(tfloat min, tfloat max) {
             
             this.minHeight = min;
             this.maxHeight = max;
@@ -287,7 +293,7 @@ namespace ME.ECS.Pathfinding {
 
         }
 
-        protected UnityEngine.Color GetPenaltyColor(sfloat penalty) {
+        protected UnityEngine.Color GetPenaltyColor(tfloat penalty) {
 
             var min = this.minPenalty;
             var max = this.maxPenalty;
@@ -300,7 +306,7 @@ namespace ME.ECS.Pathfinding {
 
         }
 
-        protected UnityEngine.Color GetHeightColor(sfloat height) {
+        protected UnityEngine.Color GetHeightColor(tfloat height) {
 
             var min = this.minHeight;
             var max = this.maxHeight;
@@ -330,11 +336,11 @@ namespace ME.ECS.Pathfinding {
 
             this.buildingState = BuildingState.Building;
 
-            this.minPenalty = sfloat.MaxValue;
-            this.maxPenalty = sfloat.MinValue;
+            this.minPenalty = tfloat.MaxValue;
+            this.maxPenalty = tfloat.MinValue;
 
-            this.minHeight = sfloat.MaxValue;
-            this.maxHeight = sfloat.MinValue;
+            this.minHeight = tfloat.MaxValue;
+            this.maxHeight = tfloat.MinValue;
 
             System.Diagnostics.Stopwatch swBuildNodes = null;
             if ((pathfindingLogLevel & LogLevel.GraphBuild) != 0) swBuildNodes = System.Diagnostics.Stopwatch.StartNew();

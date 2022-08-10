@@ -1,4 +1,10 @@
-﻿using ME.ECS.Mathematics;
+﻿#if FIXED_POINT_MATH
+using ME.ECS.Mathematics;
+using tfloat = sfloat;
+#else
+using Unity.Mathematics;
+using tfloat = System.Single;
+#endif
 
 namespace ME.ECS.Pathfinding.Features {
 
@@ -24,7 +30,7 @@ namespace ME.ECS.Pathfinding.Features {
                 var p3 = p2 + t2;
 
                 for (int j = 0; j < segmentsCount; j++) {
-                    outputPoints.Add(CubicBezier(p0, p1, p3, p2, (sfloat)j / segmentsCount));
+                    outputPoints.Add(CubicBezier(p0, p1, p3, p2, (tfloat)j / segmentsCount));
                 }
             }
 
@@ -33,9 +39,9 @@ namespace ME.ECS.Pathfinding.Features {
             return outputPoints;
         }
 
-        private static float3 CubicBezier(float3 p0, float3 p1, float3 p2, float3 p3, sfloat t) {
+        private static float3 CubicBezier(float3 p0, float3 p1, float3 p2, float3 p3, tfloat t) {
             t = math.clamp(t, 0, 1);
-            sfloat t2 = 1 - t;
+            tfloat t2 = 1 - t;
             return t2 * t2 * t2 * p0 + 3 * t2 * t2 * t * p1 + 3 * t2 * t * t * p2 + t * t * t * p3;
         }
     }

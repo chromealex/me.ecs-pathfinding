@@ -1,7 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if FIXED_POINT_MATH
 using ME.ECS.Mathematics;
+using tfloat = sfloat;
+#else
+using Unity.Mathematics;
+using tfloat = System.Single;
+#endif
 
 namespace ME.ECS.Pathfinding {
     
@@ -261,7 +268,7 @@ namespace ME.ECS.Pathfinding {
             float3 nearest = default;
             if (this.graphs != null) {
 
-                sfloat dist = sfloat.MaxValue;
+                var dist = tfloat.MaxValue;
                 for (int i = 0; i < this.graphs.Count; ++i) {
 
                     if (constraint.graphMask >= 0 && (constraint.graphMask & (1 << this.graphs[i].index)) == 0) continue;
@@ -291,7 +298,7 @@ namespace ME.ECS.Pathfinding {
             NodeInfo nearest = default;
             if (this.graphs != null) {
 
-                sfloat dist = sfloat.MaxValue;
+                var dist = tfloat.MaxValue;
                 for (int i = 0; i < this.graphs.Count; ++i) {
 
                     if (constraint.graphMask >= 0 && (constraint.graphMask & (1 << this.graphs[i].index)) == 0) continue;

@@ -1,7 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if FIXED_POINT_MATH
 using ME.ECS.Mathematics;
+using tfloat = sfloat;
+#else
+using Unity.Mathematics;
+using tfloat = System.Single;
+#endif
 
 namespace ME.ECS.Pathfinding {
 
@@ -151,7 +158,7 @@ namespace ME.ECS.Pathfinding {
                         
                         var node = path.graph.GetNearest(pos, cons);
                         if ( //node.walkable == false ||
-                            math.abs(node.node.penalty - current.penalty) > sfloat.Epsilon ||
+                            math.abs(node.node.penalty - current.penalty) > tfloat.Epsilon ||
                             node.node.IsSuitable(constraint) == false) {
 
                             allWalkable = false;

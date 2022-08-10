@@ -1,5 +1,13 @@
 using UnityEngine;
 
+#if FIXED_POINT_MATH
+using ME.ECS.Mathematics;
+using tfloat = sfloat;
+#else
+using Unity.Mathematics;
+using tfloat = System.Single;
+#endif
+
 namespace ME.ECS.Pathfinding {
 
     public class NavMeshTilemapAddObstaclesGraphModifier : GraphModifierBase {
@@ -98,7 +106,7 @@ namespace ME.ECS.Pathfinding {
             
         }
 
-        public bool GetHeight(NavMeshGraph graph, Vector3 worldPosition, out sfloat height) {
+        public bool GetHeight(NavMeshGraph graph, Vector3 worldPosition, out tfloat height) {
 
             height = 0f;
 
@@ -125,10 +133,10 @@ namespace ME.ECS.Pathfinding {
             
         }
 
-        public void GetMinMaxHeight(out sfloat min, out sfloat max) {
+        public void GetMinMaxHeight(out tfloat min, out tfloat max) {
 
-            min = sfloat.MaxValue;
-            max = sfloat.MinValue;
+            min = tfloat.MaxValue;
+            max = tfloat.MinValue;
 
             for (int i = 0; i < this.items.Length; ++i) {
 

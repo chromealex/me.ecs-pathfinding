@@ -1,6 +1,13 @@
 ﻿using Unity.Jobs;
 using UnityEngine;
+
+#if FIXED_POINT_MATH
 using ME.ECS.Mathematics;
+using tfloat = sfloat;
+#else
+using Unity.Mathematics;
+using tfloat = System.Single;
+#endif
 
 namespace ME.ECS.Pathfinding {
     
@@ -86,7 +93,7 @@ namespace ME.ECS.Pathfinding {
 
             public bool isClosed;
             public bool isOpened;
-            public sfloat startToCurNodeLen;
+            public tfloat startToCurNodeLen;
             public int parent;
 
         }
