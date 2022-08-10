@@ -1,8 +1,8 @@
 {
-  "name": "com.me.ecs.essentials.pathfinding",
+  "name": "com.me.ecs.addons.pathfinding",
   "version": "1.0.6",
-  "displayName": "ME.ECS Essentials Pathfinding",
-  "description": "ME.ECS Essentials Pathfinding Package.",
+  "displayName": "ME.ECS Add-on Pathfinding",
+  "description": "ME.ECS Add-on Pathfinding Package.",
   "unity": "2020.3",
   "documentationUrl": "https://github.com/chromealex/me.ecs-pathfinding/blob/master/README.md",
   "dependencies": {
