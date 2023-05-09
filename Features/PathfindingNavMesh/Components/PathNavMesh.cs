@@ -16,13 +16,13 @@ namespace ME.ECS.Pathfinding.Features.PathfindingNavMesh.Components {
             get => (ME.ECS.Pathfinding.PathCompleteState)this.resultValue;
             set => this.resultValue = (byte)value;
         }
-        public ME.ECS.Collections.MemoryAllocator.List<float3> path;
+        public ME.ECS.Collections.LowLevel.List<float3> path;
 
-        public void OnDispose(ref ME.ECS.Collections.V3.MemoryAllocator allocator) {
+        public void OnDispose(ref ME.ECS.Collections.LowLevel.Unsafe.MemoryAllocator allocator) {
             if (this.path.isCreated == true) this.path.Dispose(ref allocator);
         }
 
-        public void ReplaceWith(ref ME.ECS.Collections.V3.MemoryAllocator allocator, in PathNavMesh other) {
+        public void ReplaceWith(ref ME.ECS.Collections.LowLevel.Unsafe.MemoryAllocator allocator, in PathNavMesh other) {
             this.resultValue = other.resultValue;
             this.path.ReplaceWith(ref allocator, in other.path);
         }

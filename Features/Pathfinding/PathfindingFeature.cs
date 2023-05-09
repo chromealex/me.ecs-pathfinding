@@ -87,7 +87,7 @@ namespace ME.ECS.Pathfinding.Features {
             }
 
             entity.Set(new ME.ECS.Pathfinding.Features.PathfindingFlowField.Components.PathFlowField() {
-                flowField = new ME.ECS.Collections.V3.MemArrayAllocator<byte>(ref Worlds.current.GetState().allocator, path.flowField),
+                flowField = new ME.ECS.Collections.LowLevel.MemArrayAllocator<byte>(ref Worlds.current.GetState().allocator, path.flowField),
                 from = from,
                 to = to,
                 cacheEnabled = cacheEnabled,
@@ -100,7 +100,7 @@ namespace ME.ECS.Pathfinding.Features {
 
             ref var allocator = ref Worlds.current.GetState().allocator;
 
-            var list = new ME.ECS.Collections.MemoryAllocator.List<float3>(ref allocator, path.navMeshPoints.Count);
+            var list = new ME.ECS.Collections.LowLevel.List<float3>(ref allocator, path.navMeshPoints.Count);
             list.AddRange(ref allocator, path.navMeshPoints);
             entity.Set(new ME.ECS.Pathfinding.Features.PathfindingNavMesh.Components.PathNavMesh() {
                 result = path.result,
@@ -173,8 +173,8 @@ namespace ME.ECS.Pathfinding.Features {
             
             entity.Set(new ME.ECS.Pathfinding.Features.PathfindingAstar.Components.Path() {
                 result = result,
-                path = new ME.ECS.Collections.V3.MemArrayAllocator<float3>(ref allocator, vPath),//ME.ECS.Collections.BufferArray<float3>.From(vPath),
-                nodes = new ME.ECS.Collections.V3.MemArrayAllocator<int>(ref allocator, vNodes),//ME.ECS.Collections.BufferArray<ME.ECS.Pathfinding.Node>.From(nodes),
+                path = new ME.ECS.Collections.LowLevel.MemArrayAllocator<float3>(ref allocator, vPath),//ME.ECS.Collections.BufferArray<float3>.From(vPath),
+                nodes = new ME.ECS.Collections.LowLevel.MemArrayAllocator<int>(ref allocator, vNodes),//ME.ECS.Collections.BufferArray<ME.ECS.Pathfinding.Node>.From(nodes),
             });
             entity.Set(new IsPathBuilt(), ComponentLifetime.NotifyAllSystems);
             
