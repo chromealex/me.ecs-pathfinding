@@ -141,15 +141,16 @@ namespace ME.ECS.Pathfinding {
 
         }
 
+        private ME.ECS.Collections.ListCopyable<NavMeshBuildSource> tempList = new ME.ECS.Collections.ListCopyable<NavMeshBuildSource>(100);
         public bool UpdateGraph(Unity.Collections.NativeArray<NavMeshBuildSource> sources, Unity.Collections.NativeArray<NavMeshBuildSource> sources2) {
 
             if (this.navMeshData == null) return false;
-
-            var temp = PoolListCopyable<NavMeshBuildSource>.Spawn(sources.Length + sources2.Length);
-            temp.AddRange(sources);
-            temp.AddRange(sources2);
-            var result = this.UpdateGraph(temp);
-            PoolListCopyable<NavMeshBuildSource>.Recycle(ref temp);
+            
+            this.tempList.Clear();
+            this.tempList.AddRange(sources);
+            this.tempList.AddRange(sources2);
+            var result = this.UpdateGraph(this.tempList);
+            this.tempList.Clear();
             return result;
 
         }
@@ -202,13 +203,12 @@ namespace ME.ECS.Pathfinding {
         public bool UpdateGraph(ME.ECS.Collections.ListCopyable<NavMeshBuildSource> sources, Bounds bounds) {
 
             if (this.navMeshData == null) return false;
-            
-            if (this.tempSources == null) this.tempSources = new List<NavMeshBuildSource>(this.buildSources != null ? this.buildSources.Count : 4);
+
+            if (this.tempSources == null) this.tempSources = new List<NavMeshBuildSource>(this.buildSources != null ? this.buildSources.Count : sources.Count);
             this.tempSources.Clear();
             if (this.buildSources != null) this.tempSources.AddRange(this.buildSources);
             if (sources != null) this.tempSources.AddRange(sources);
-
-
+            
             var hash = 0;
             for (int i = 0; i < this.tempSources.Count; i++) {
                 hash ^= this.tempSources[i].transform.GetHashCode();
