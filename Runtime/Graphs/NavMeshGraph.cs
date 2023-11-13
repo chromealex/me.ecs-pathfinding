@@ -412,6 +412,12 @@ namespace ME.ECS.Pathfinding {
 
         }
 
+        private void OnDestroy() {
+            
+            this.Recycle();
+            
+        }
+
     }
 
 }
