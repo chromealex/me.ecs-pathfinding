@@ -422,7 +422,7 @@ namespace ME.ECS.Pathfinding {
 
                 for (int i = 0; i < this.graphs.Count; ++i) {
 
-                    this.graphs[i].Recycle();
+                    this.graphs[i].DoCleanUp();
 
                 }
                 
