@@ -120,9 +120,8 @@ namespace ME.ECS.Pathfinding {
         protected override void OnCleanUp() {
             
             base.OnCleanUp();
-            
-            //NavMesh.RemoveAllNavMeshData();
-            //NavMesh.RemoveNavMeshData(this.navMeshDataInstance);
+
+            if (this.navMeshDataInstance.valid == true)  NavMesh.RemoveNavMeshData(this.navMeshDataInstance);
             Object.DestroyImmediate(this.navMeshData);
             this.navMeshData = null;
             if (this.navMeshDataInstance.valid == true) this.navMeshDataInstance.Remove();

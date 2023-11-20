@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 #if FIXED_POINT_MATH
 using ME.ECS.Mathematics;
@@ -421,9 +422,11 @@ namespace ME.ECS.Pathfinding {
 
                 for (int i = 0; i < this.graphs.Count; ++i) {
 
-                    this.graphs[i].DoCleanUp();
+                    this.graphs[i].Recycle();
 
                 }
+                
+                NavMesh.RemoveAllNavMeshData();
 
                 for (int i = 0; i < this.graphs.Count; ++i) {
 
