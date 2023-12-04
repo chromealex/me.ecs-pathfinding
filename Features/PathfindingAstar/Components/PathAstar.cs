@@ -28,6 +28,11 @@ namespace ME.ECS.Pathfinding.Features.PathfindingAstar.Components {
             this.path.ReplaceWith(ref allocator, other.path);
             this.nodes.ReplaceWith(ref allocator, other.nodes);
         }
+        
+        public void CopyFrom(ref ME.ECS.Collections.LowLevel.Unsafe.MemoryAllocator allocator, in Path other) {
+            this.path.CopyFrom(ref allocator, other.path);
+            this.nodes.CopyFrom(ref allocator, other.nodes);
+        }
 
     }
 

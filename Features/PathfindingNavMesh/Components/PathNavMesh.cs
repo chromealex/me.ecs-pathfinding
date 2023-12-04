@@ -26,6 +26,11 @@ namespace ME.ECS.Pathfinding.Features.PathfindingNavMesh.Components {
             this.resultValue = other.resultValue;
             this.path.ReplaceWith(ref allocator, in other.path);
         }
+        
+        public void CopyFrom(ref ME.ECS.Collections.LowLevel.Unsafe.MemoryAllocator allocator, in PathNavMesh other) {
+            this.resultValue = other.resultValue;
+            this.path.CopyFrom(ref allocator, in other.path);
+        }
 
     }
 
