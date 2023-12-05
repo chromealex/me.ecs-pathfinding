@@ -31,6 +31,10 @@ namespace ME.ECS.Pathfinding {
             private static Entry[] pool = new Entry[Cache.maxCacheSize];
             private static int currentIndex = 0;
 
+            public static void Reset() {
+                System.Array.Clear(pool, 0, pool.Length);
+            }
+
             public static bool Get(in float3 from, in float3 to, int constraintKey, in NavMeshGraph graph, out Path path) {
 
                 path = default;
@@ -228,18 +232,24 @@ namespace ME.ECS.Pathfinding {
         private const int MAX_ITERATIONS = 1024;
         private const int MAX_PATH_SIZE = 1024;
 
+        public void Reset() {
+            
+            Cache.Reset();
+            
+        }
+
         public Path Run<TMod>(LogLevel pathfindingLogLevel, float3 fromPoint, float3 toPoint, Constraint constraint, Graph graph, TMod pathModifier, int threadIndex = 0,
                               bool burstEnabled = true, bool cacheEnabled = false) where TMod : struct, IPathModifier {
             
             var navMeshGraph = (NavMeshGraph)graph;
+            Path path = default;
 
-            if (Cache.Get(fromPoint, toPoint, constraint.GetKey(), navMeshGraph, out var path) == true) {
+            if (cacheEnabled == true && Cache.Get(fromPoint, toPoint, constraint.GetKey(), navMeshGraph, out path) == true) {
                 return path;
             }
 
             var pathResult = new PathInternal();
             
-
             var areas = -1;
             if (constraint.checkArea == true) {
 
@@ -499,7 +509,7 @@ namespace ME.ECS.Pathfinding {
 
             query.Dispose();
             
-            Cache.Set(fromPoint, toPoint, constraint.GetKey(), navMeshGraph, path);
+            if (cacheEnabled == true) Cache.Set(fromPoint, toPoint, constraint.GetKey(), navMeshGraph, path);
 
             return path;
 

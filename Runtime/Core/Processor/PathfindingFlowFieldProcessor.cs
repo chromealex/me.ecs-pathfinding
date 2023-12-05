@@ -19,6 +19,10 @@ namespace ME.ECS.Pathfinding {
         private static System.Collections.Generic.Queue<long> pathCacheQueue = new System.Collections.Generic.Queue<long>();
         private const int CACHE_SIZE = 100;
 
+        public void Reset() {
+            PathfindingFlowFieldProcessor.ClearCache();
+        }
+
         public static void ClearCache() {
 
             foreach (var item in PathfindingFlowFieldProcessor.pathCache) {

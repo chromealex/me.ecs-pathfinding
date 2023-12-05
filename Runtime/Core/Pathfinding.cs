@@ -160,7 +160,7 @@ namespace ME.ECS.Pathfinding {
 
         private void ClearCache() {
 
-            PathfindingFlowFieldProcessor.ClearCache();
+            Pathfinding.defaultProcessor.Reset();
 
         }
 

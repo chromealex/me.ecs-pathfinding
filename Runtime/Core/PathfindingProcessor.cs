@@ -14,6 +14,7 @@ namespace ME.ECS.Pathfinding {
 
     public interface IPathfindingProcessor {
 
+        void Reset();
         Path Run<TMod>(LogLevel pathfindingLogLevel, float3 from, float3 to, Constraint constraint, Graph graph, TMod pathModifier, int threadIndex = 0, bool burstEnabled = true, bool cacheEnabled = false) where TMod : struct, IPathModifier;
 
     }
