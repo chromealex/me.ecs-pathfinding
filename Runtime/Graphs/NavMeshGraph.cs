@@ -72,10 +72,14 @@ namespace ME.ECS.Pathfinding {
         private ME.ECS.Collections.DictionaryCopyable<Key<Entity, int>, NavMeshBuildSource> buildSourcesEntities;
         [System.NonSerializedAttribute]
         private List<NavMeshBuildSource> tempSources;
-        
+
         public int lastGraphUpdateHash { get; private set;  }
 
         public bool drawMesh;
+
+        public void WaitForJobs() {
+            
+        }
         
         public void AddBuildSource(in NavMeshBuildSource buildSource) {
             
@@ -146,8 +150,8 @@ namespace ME.ECS.Pathfinding {
             if (this.navMeshData == null) return false;
             
             this.tempList.Clear();
-            this.tempList.AddRange(sources);
-            this.tempList.AddRange(sources2);
+            if (sources.IsCreated == true) this.tempList.AddRange(sources);
+            if (sources2.IsCreated == true) this.tempList.AddRange(sources2);
             var result = this.UpdateGraph(this.tempList);
             this.tempList.Clear();
             return result;
@@ -199,6 +203,14 @@ namespace ME.ECS.Pathfinding {
             
         }
 
+        public int CalcHashCode(int offset, int count) {
+            var hash = 23;
+            for (int i = offset; i < count; i++) {
+                hash = hash * 31 + this.tempSources[i].transform.GetHashCode();
+            }
+            return hash;
+        }
+
         public bool UpdateGraph(ME.ECS.Collections.ListCopyable<NavMeshBuildSource> sources, Bounds bounds) {
 
             if (this.navMeshData == null) return false;
@@ -207,14 +219,14 @@ namespace ME.ECS.Pathfinding {
             this.tempSources.Clear();
             if (this.buildSources != null) this.tempSources.AddRange(this.buildSources);
             if (sources != null) this.tempSources.AddRange(sources);
-            
-            var hash = 0;
-            for (int i = 0; i < this.tempSources.Count; i++) {
-                hash ^= this.tempSources[i].transform.GetHashCode();
-            }
 
+            var hash = this.CalcHashCode(0, this.tempSources.Count);
+            if (this.lastGraphUpdateHash != hash) {
+                return false;
+            }
             this.lastGraphUpdateHash = hash;
             
+            this.WaitForJobs();
             if (NavMeshBuilder.UpdateNavMeshData(this.navMeshData, this.buildSettings, this.tempSources, bounds) == false) {
 
                 return false;
@@ -292,6 +304,7 @@ namespace ME.ECS.Pathfinding {
 
         public override bool ClampPosition(float3 worldPosition, Constraint constraint, out float3 position) {
 
+            this.WaitForJobs();
             if (UnityEngine.AI.NavMesh.SamplePosition((Vector3)worldPosition, out var hit, 1000f, new NavMeshQueryFilter() {
                 agentTypeID = this.agentTypeId,
                 areaMask = constraint.checkArea == true ? (int)constraint.areaMask : -1,
@@ -357,7 +370,8 @@ namespace ME.ECS.Pathfinding {
         }
 
         public override NodeInfo GetNearest(float3 worldPosition, Constraint constraint) {
-
+            
+            this.WaitForJobs();
             if (this.ClampPosition(worldPosition, constraint, out var pos) == true) {
 
                 return new NodeInfo() {
