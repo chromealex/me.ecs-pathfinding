@@ -221,7 +221,7 @@ namespace ME.ECS.Pathfinding {
             if (sources != null) this.tempSources.AddRange(sources);
 
             var hash = this.CalcHashCode(0, this.tempSources.Count);
-            if (this.lastGraphUpdateHash != hash) {
+            if (this.lastGraphUpdateHash == hash) {
                 return false;
             }
             this.lastGraphUpdateHash = hash;
