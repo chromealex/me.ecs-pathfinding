@@ -203,10 +203,10 @@ namespace ME.ECS.Pathfinding {
             
         }
 
-        public int CalcHashCode(int offset, int count) {
+        public static int CalcHashCode(List<NavMeshBuildSource> tempSources, int offset, int count) {
             var hash = 23;
             for (int i = offset; i < count; i++) {
-                hash = hash * 31 + this.tempSources[i].transform.GetHashCode();
+                hash = hash * 31 + tempSources[i].transform.GetHashCode();
             }
             return hash;
         }
@@ -220,7 +220,7 @@ namespace ME.ECS.Pathfinding {
             if (this.buildSources != null) this.tempSources.AddRange(this.buildSources);
             if (sources != null) this.tempSources.AddRange(sources);
 
-            var hash = this.CalcHashCode(0, this.tempSources.Count);
+            var hash = CalcHashCode(this.tempSources, 0, this.tempSources.Count);
             if (this.lastGraphUpdateHash == hash) {
                 return false;
             }

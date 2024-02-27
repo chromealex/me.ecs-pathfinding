@@ -1,6 +1,6 @@
 {
   "name": "com.me.ecs.addons.pathfinding",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "displayName": "ME.ECS Add-on Pathfinding",
   "description": "ME.ECS Add-on Pathfinding Package.",
   "unity": "2020.3",
