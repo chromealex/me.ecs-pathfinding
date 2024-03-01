@@ -50,7 +50,7 @@ namespace ME.ECS.Pathfinding.Features.PathfindingNavMesh.Systems {
 
             if (this.pathfindingFeature.GetEntity().Has<PathfindingInstance>() == false) return;
             
-            var instance = this.pathfindingFeature.GetEntity().Get<PathfindingInstance>();
+            var instance = this.pathfindingFeature.GetEntity().Read<PathfindingInstance>();
             var active = instance.pathfinding;
             if (active == null) return;
 
@@ -91,7 +91,7 @@ namespace ME.ECS.Pathfinding.Features.PathfindingNavMesh.Systems {
             
             if (this.pathfindingFeature.GetEntity().Has<PathfindingInstance>() == false) return;
 
-            var instance = this.pathfindingFeature.GetEntity().Get<PathfindingInstance>();
+            var instance = this.pathfindingFeature.GetEntity().Read<PathfindingInstance>();
             var active = instance.pathfinding;
             if (active == null) return;
 
