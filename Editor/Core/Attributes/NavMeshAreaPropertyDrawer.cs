@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -11,7 +11,7 @@ namespace ME.ECS.Pathfinding.Editor {
         public override void OnGUI(Rect position, UnityEditor.SerializedProperty property, GUIContent label) {
 
             var areaIndex = property.intValue;
-            var areaNames = GameObjectUtility.GetNavMeshAreaNames();
+            var areaNames = UnityEngine.AI.NavMesh.GetAreaNames();
             /*for (var i = 0; i < areaNames.Length; i++) {
                 var areaValue = GameObjectUtility.GetNavMeshAreaFromName(areaNames[i]);
                 if (areaValue == property.intValue) areaIndex = i;
@@ -37,7 +37,7 @@ namespace ME.ECS.Pathfinding.Editor {
         public static int GUILayout(string caption, int areaIndex) {
             
             //var areaIndex = -1;
-            var areaNames = GameObjectUtility.GetNavMeshAreaNames();
+            var areaNames = UnityEngine.AI.NavMesh.GetAreaNames();
             /*for (var i = 0; i < areaNames.Length; i++) {
                 var areaValue = GameObjectUtility.GetNavMeshAreaFromName(areaNames[i]);
                 if (areaValue == targetFloorArea) areaIndex = i;
@@ -67,9 +67,9 @@ namespace ME.ECS.Pathfinding.Editor {
         public override void OnGUI(Rect position, UnityEditor.SerializedProperty property, GUIContent label) {
 
             var areaIndex = 0;
-            var areaNames = GameObjectUtility.GetNavMeshAreaNames();
+            var areaNames = UnityEngine.AI.NavMesh.GetAreaNames();
             for (var i = 0; i < areaNames.Length; i++) {
-                var areaValue = 1 << GameObjectUtility.GetNavMeshAreaFromName(areaNames[i]);
+                var areaValue = 1 << UnityEngine.AI.NavMesh.GetAreaFromName(areaNames[i]);
                 if ((property.intValue & areaValue) != 0) areaIndex |= areaValue;
             }
 
